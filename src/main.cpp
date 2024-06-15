@@ -4,6 +4,9 @@
 #include "matrix.h"
 #include "figure.h"
 #include "figures.cpp"
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2); // I2C address 0x27, 16 column and 2 rows
 
 
 #define TIME 0
@@ -20,6 +23,13 @@ void setup() {
     pinMode( LEFTBTN, INPUT_PULLUP);
     pinMode( RIGHTBTN, INPUT_PULLUP);
     pinMode( ROTATEBTN, INPUT_PULLUP);
+
+    lcd.init(); // initialize the lcd
+    lcd.backlight();
+
+    lcd.clear();              // clear display
+    lcd.setCursor(0, 0);      // move cursor to   (0, 0)
+    lcd.print("TETRIS BY KHANDER");       // print message at (0, 0)
 
     //m.set_by_pos(5, 5, 1);
     //m.set_by_pos(15, 2, 1);
