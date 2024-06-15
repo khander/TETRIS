@@ -13,7 +13,7 @@ Matrix m;
 //_J_ j_;
 //Figure *fig = new j_figure();
 //j_figure figr;
-Figure *fig = new t_figure();
+Figure *fig = new j_figure();
 
 void setup() {
 
@@ -33,7 +33,7 @@ void setup() {
     //fig->put_figure(m, 1);
 
     //figs[1] = new _J_();
-    fig->set_base_pos(3, 10);
+    //fig->set_base_pos(5, 1);
     fig->put_figure(m, 1);
 
 }   //setup
@@ -49,8 +49,18 @@ void loop() {
     
     m.print();
     ticks++;
-    if(ticks == 200){
+    if(ticks == 20){
         fig->put_figure(m, 0);
+        if(fig->check_if_able_down(m)){
+            fig->down(m);
+        }
+        else{
+            fig->put_figure(m, 1);
+            delete fig;
+            fig = new o_figure;
+            fig->set_base_pos(4, 1);
+        }
+        fig->put_figure(m, 1);
 
         /*
         m.set_by_pos(21 - l + 1, r, 0);

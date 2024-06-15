@@ -15,9 +15,10 @@ protected:
 public:
     Figure();
     virtual int rotate() = 0;
-    void push();
     void put_figure(Matrix&, int);
     void set_base_pos(int, int);
+    int down(Matrix&);
+    int check_if_able_down(Matrix&);
     virtual ~Figure(){};
 };
 
