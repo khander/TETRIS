@@ -14,11 +14,16 @@ protected:
 
 public:
     Figure();
-    virtual int rotate() = 0;
-    void put_figure(Matrix&, int);
+    virtual int rotate(Matrix &);       //was pure
+    int check_if_able_rotate(Matrix &);
+    void put_figure(Matrix &, int);
     void set_base_pos(int, int);
-    int down(Matrix&);
-    int check_if_able_down(Matrix&);
+    int down(Matrix &);
+    int right(Matrix &);
+    int left(Matrix &);
+    int check_if_able_down(Matrix &);
+    int check_if_able_left(Matrix &);
+    int check_if_able_right(Matrix &);
     virtual ~Figure(){};
 };
 

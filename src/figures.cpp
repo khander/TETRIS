@@ -50,9 +50,6 @@ public:
     z_figure() : Figure(){
         fig[1][0] = fig[1][1] = fig[2][1] = fig[2][2] = 1;
     };
-    int rotate(){
-        return 0;
-    }
 };
 
 class o_figure : public Figure{

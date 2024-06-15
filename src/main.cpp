@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <stdio.h>
+#include "includes.h"
 #include "matrix.h"
 #include "figure.h"
 #include "figures.cpp"
@@ -16,6 +17,9 @@ Matrix m;
 Figure *fig = new j_figure();
 
 void setup() {
+    pinMode( LEFTBTN, INPUT_PULLUP);
+    pinMode( RIGHTBTN, INPUT_PULLUP);
+    pinMode( ROTATEBTN, INPUT_PULLUP);
 
     //m.set_by_pos(5, 5, 1);
     //m.set_by_pos(15, 2, 1);
@@ -42,25 +46,60 @@ static int ticks = 0;
 int l = 0;
 int r = 0;
 
+int lastStateLeft = HIGH;
+int currentStateLeft;
 
+int lastStateRight = HIGH;
+int currentStateRight;
+
+int lastStateRotate = HIGH;
+int currentStateRotate;
 
 
 void loop() {
+    currentStateLeft = digitalRead(LEFTBTN);
+    currentStateRight = digitalRead(RIGHTBTN);
+    currentStateRotate = digitalRead(ROTATEBTN);    
     
     m.print();
     ticks++;
+
+    if(ticks % 3 == 0){
+        fig->put_figure(m, 0);
+        
+        if(lastStateLeft == LOW && currentStateLeft == HIGH)
+            fig->left(m);
+        lastStateLeft = currentStateLeft;
+
+        if(lastStateRight == LOW && currentStateRight == HIGH)
+            fig->right(m);
+        lastStateRight = currentStateRight;
+
+        if(lastStateRotate == LOW && currentStateRotate == HIGH)
+            fig->rotate(m);
+        lastStateRotate = currentStateRotate;
+
+        fig->put_figure(m, 1);
+    }
+
     if(ticks == 20){
         fig->put_figure(m, 0);
-        if(fig->check_if_able_down(m)){
-            fig->down(m);
-        }
-        else{
+//        if(fig->check_if_able_down(m)){
+//            fig->down(m);
+        if(!(fig->down(m))){
             fig->put_figure(m, 1);
             delete fig;
-            fig = new o_figure;
-            fig->set_base_pos(4, 1);
+            fig = new t_figure;
+            fig->left(m);
+            fig->rotate(m);
+            //fig->set_base_pos(4, 1);
         }
+        //fig->right(m);
+        
+
+
         fig->put_figure(m, 1);
+        
 
         /*
         m.set_by_pos(21 - l + 1, r, 0);
