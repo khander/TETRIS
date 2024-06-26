@@ -1,5 +1,5 @@
-//#ifndef includes
-//#define includes
+#ifndef INCLUDES_H
+#define INCLUDES_H
 #include <Arduino.h>
 
 
@@ -11,9 +11,10 @@
 #define LEFTBTN 15
 #define RIGHTBTN 16
 #define ROTATEBTN 17
+//#define UPBTN               //finish
 
 
 
 
 
-//#endif
+#endif
