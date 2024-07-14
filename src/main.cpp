@@ -24,12 +24,23 @@ void setup() {
     pinMode( RIGHTBTN, INPUT_PULLUP);
     pinMode( ROTATEBTN, INPUT_PULLUP);
 
+
+    pinMode(DATAPIN2, OUTPUT);
+    pinMode(LATCHPIN2, OUTPUT);
+    //pinMode(CLOCKPIN2, OUTPUT);
+    unsigned test = 10101010;
+    digitalWrite(LATCHPIN2, LOW);
+    shiftOut(DATAPIN2, CLOCKPIN1, LSBFIRST, test);
+    digitalWrite(LATCHPIN2, HIGH);
+
+
+
     lcd.init(); // initialize the lcd
     lcd.backlight();
 
     lcd.clear();              // clear display
-    lcd.setCursor(0, 0);      // move cursor to   (0, 0)
-    lcd.print("TETRIS BY KHANDER");       // print message at (0, 0)
+    lcd.setCursor(0, 1);      // move cursor to   (0, 0)
+    lcd.print("TETRIS");       // print message at (0, 0)
 
     //m.set_by_pos(5, 5, 1);
     //m.set_by_pos(15, 2, 1);
