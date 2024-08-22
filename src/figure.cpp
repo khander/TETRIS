@@ -2,10 +2,10 @@
 //#include "matrix.h"
 
 int check_if_correct(int x, int y){
-    return (x > -1 && x < 10 && y > 0 && y < 22);
+    return (x > -1 && x < 10 && y > 0 && y < 21);
 }   //check if correct
 
-    int fig_copy[4][4];
+
 
 
 Figure::Figure(){
@@ -54,8 +54,8 @@ int Figure::check_if_able_rotate(Matrix& m){
         for (int j = 0; j < 4; j++){
             x = base_pos_x + (i - inner_pos_x);
             y = base_pos_y + (j - inner_pos_y);
-            if(!(check_if_correct(x, y)) && fig_copy[j][i] == 1){
-                if(m.get_state_by_pos(x, y) == 1)
+            if( fig_copy[j][i] == 1){
+                if(m.get_state_by_pos(x, y) == 1 || !check_if_correct(x, y))
                     return 0;
             }
         }
@@ -122,8 +122,8 @@ int Figure::check_if_able_right(Matrix& m){
         for (int j = 0; j < 4; j++){
             x = cur_x + (i - inner_pos_x);
             y = base_pos_y + (j - inner_pos_y);
-            if(!(check_if_correct(x, y)) && fig[j][i] == 1){
-                if(m.get_state_by_pos(x, y) == 1 || x > 9)
+            if(fig[j][i] == 1){
+                if(m.get_state_by_pos(x, y) == 1 || x > 9 || !check_if_correct(x, y))
                     return 0;
             }
         }
@@ -138,8 +138,8 @@ int Figure::check_if_able_left(Matrix& m){
         for (int j = 0; j < 4; j++){
             x = cur_x + (i - inner_pos_x);
             y = base_pos_y + (j - inner_pos_y);
-            if(!check_if_correct(x, y) && fig[j][i] == 1){
-                if(m.get_state_by_pos(x, y) == 1 || x < 0)
+            if(fig[j][i] == 1){
+                if(m.get_state_by_pos(x, y) == 1 || x < 0 || !check_if_correct(x, y))
                     return 0;
             }
         }
@@ -155,8 +155,8 @@ int Figure::check_if_able_down(Matrix& m){
         for (int j = 0; j < 4; j++){
             x = base_pos_x + (i - inner_pos_x);
             y = cur_y + (j - inner_pos_y);
-            if(check_if_correct(x, y) && fig[j][i] == 1){
-                if(m.get_state_by_pos(x, y) == 1 || y > 20)
+            if( fig[j][i] == 1){
+                if(m.get_state_by_pos(x, y) == 1 || y > 20 || !check_if_correct(x, y) )
                     return 0;
             }
         }

@@ -6,6 +6,7 @@
 class Figure{
 protected:
     int fig[4][4];
+    int fig_copy[4][4];
     int base_pos_x;     //x position in main matrix
     int base_pos_y;     //y position in main matrix
 

@@ -17,7 +17,7 @@ Matrix m;
 //_J_ j_;
 //Figure *fig = new j_figure();
 //j_figure figr;
-Figure *fig = new o_figure();
+Figure *fig = new i_figure();
 
 void setup() {
     pinMode( LEFTBTN, INPUT_PULLUP);
@@ -99,7 +99,7 @@ void loop() {
         if(!(fig->down(m))){
             fig->put_figure(m, 1);
             delete fig;
-            fig = new t_figure;
+            fig = new z_figure;
             fig->left(m);
             fig->rotate(m);
             //fig->set_base_pos(4, 1);
