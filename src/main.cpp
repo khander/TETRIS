@@ -17,7 +17,7 @@ Matrix m;
 //_J_ j_;
 //Figure *fig = new j_figure();
 //j_figure figr;
-Figure *fig = new j_figure();
+Figure *fig = new o_figure();
 
 void setup() {
     pinMode( LEFTBTN, INPUT_PULLUP);

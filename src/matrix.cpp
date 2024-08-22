@@ -1,7 +1,8 @@
 #include "includes.h"
 #include "matrix.h"
 
-int rows[] = {19, 18, 32, 33, 25, 26, 27, 14, 12, 13}; 
+
+int rows[] = {15, 18, 13, 12, 14, 27, 26, 25, 33, 32}; 
  
 
 void _shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint32_t val) {
