@@ -52,39 +52,144 @@ void setup() {
 
 }   //setup
 
+
+int lastStateRight = HIGH;
+int currentStateRight;
+unsigned long lastCheckedTimeRight = 0;
+bool isChangedRight = 0;
+
+void rightButton(){
+    currentStateRight = digitalRead(RIGHTBTN);
+    fig->put_figure(m, 0);
+    
+    if(lastStateRight == HIGH && currentStateRight == LOW){
+        fig->right(m);
+        
+        lastCheckedTimeRight = millis();
+        isChangedRight = 0;
+    }
+    else if(lastStateRight == LOW && currentStateRight == HIGH){
+        isChangedRight = 1;
+       
+    }
+    lastStateRight = currentStateRight;
+
+    if(currentStateRight == LOW && isChangedRight == 0 && ((millis() - lastCheckedTimeRight) > BOUNCE_TIME)){
+        fig->right(m);
+        lastCheckedTimeRight = millis();
+    }
+    fig->put_figure(m, 1);
+}
+
+int lastStateLeft = HIGH;
+int currentStateLeft;
+unsigned long lastCheckedTimeLeft = 0;
+bool isChangedLeft = 0;
+
+void leftButton(){
+    currentStateLeft = digitalRead(LEFTBTN);
+    fig->put_figure(m, 0);
+    
+    if(lastStateLeft == HIGH && currentStateLeft == LOW){
+        fig->left(m);
+        
+        lastCheckedTimeLeft = millis();
+        isChangedLeft = 0;
+    }
+    else if(lastStateLeft == LOW && currentStateLeft == HIGH){
+        isChangedLeft = 1;
+       
+    }
+    lastStateLeft = currentStateLeft;
+
+    if(currentStateLeft == LOW && isChangedLeft == 0 && ((millis() - lastCheckedTimeLeft) > BOUNCE_TIME)){
+        fig->left(m);
+        lastCheckedTimeLeft = millis();
+    }
+    fig->put_figure(m, 1);
+}
+
+int lastStateDown = HIGH;
+int currentStateDown;
+unsigned long lastCheckedTimeDown = 0;
+bool isChangedDown = 0;
+
+void downButton(){
+    currentStateRight = digitalRead(DOWNBTN);
+    fig->put_figure(m, 0);
+    
+    if(lastStateDown == HIGH && currentStateDown == LOW){
+        fig->down(m);
+        
+        lastCheckedTimeDown = millis();
+        isChangedDown = 0;
+    }
+    else if(lastStateDown == LOW && currentStateDown == HIGH){
+        isChangedDown = 1;
+       
+    }
+    lastStateDown = currentStateDown;
+/*
+    if(currentStateDown == LOW && isChangedDown == 0 && ((millis() - lastCheckedTimeDown) > BOUNCE_TIME)){
+        fig->down(m);
+        lastCheckedTimeDown = millis();
+    }
+    */
+    fig->put_figure(m, 1);
+}
+
+int lastStateRotate = HIGH;
+int currentStateRotate;
+unsigned long lastCheckedTimeRotate = 0;
+bool isChangedRotate = 0;
+
+void rotateButton(){
+    currentStateRotate = digitalRead(ROTATEBTN);
+    fig->put_figure(m, 0);
+    
+    if(lastStateRotate == HIGH && currentStateRotate == LOW){
+        fig->rotate(m);
+        
+        lastCheckedTimeRotate = millis();
+        isChangedRotate = 0;
+    }
+    else if(lastStateRotate == LOW && currentStateRotate == HIGH){
+        isChangedRotate = 1;
+       
+    }
+    lastStateRotate = currentStateRotate;
+
+    if(currentStateRotate == LOW && isChangedRotate == 0 && ((millis() - lastCheckedTimeRotate) > BOUNCE_TIME)){
+        fig->rotate(m);
+        lastCheckedTimeRotate = millis();
+    }
+    fig->put_figure(m, 1);
+}
+
+
 static int ticks = 0;
 int l = 0;
 int r = 0;
 
-int lastStateLeft = HIGH;
-int currentStateLeft;
+int lastStatePause = HIGH;
+int currentStatePause;
 
-int lastStateRight = HIGH;
-int currentStateRight;
-
-int lastStateRotate = HIGH;
-int currentStateRotate;
 
 
 void loop() {
-    currentStateLeft = digitalRead(LEFTBTN);
-    currentStateRight = digitalRead(RIGHTBTN);
-    currentStateRotate = digitalRead(ROTATEBTN);    
+    
+    currentStatePause = digitalRead(PAUSEBTN);
     
     m.print();
     ticks++;
+    
+    rightButton();
+    leftButton();
+    rotateButton();
+    downButton();
 
-    if(ticks % 3 == 0){
-        fig->put_figure(m, 0);
-        
-        if(lastStateLeft == LOW && currentStateLeft == HIGH)
-            fig->left(m);
-        lastStateLeft = currentStateLeft;
 
-        if(lastStateRight == LOW && currentStateRight == HIGH)
-            fig->right(m);
-        lastStateRight = currentStateRight;
-
+    
 
 
     if(ticks == 20){
