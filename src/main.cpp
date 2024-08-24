@@ -9,8 +9,6 @@
 LiquidCrystal_I2C lcd(0x27, 16, 2); // I2C address 0x27, 16 column and 2 rows
 
 
-#define TIME 0
-
 
 
 Matrix m;
@@ -23,6 +21,8 @@ void setup() {
     pinMode( LEFTBTN, INPUT_PULLUP);
     pinMode( RIGHTBTN, INPUT_PULLUP);
     pinMode( ROTATEBTN, INPUT_PULLUP);
+    pinMode( DOWNBTN, INPUT_PULLUP);
+    pinMode( PAUSEBTN, INPUT_PULLUP);
 
     lcd.init(); // initialize the lcd
     lcd.backlight();
@@ -85,12 +85,7 @@ void loop() {
             fig->right(m);
         lastStateRight = currentStateRight;
 
-        if(lastStateRotate == LOW && currentStateRotate == HIGH)
-            fig->rotate(m);
-        lastStateRotate = currentStateRotate;
 
-        fig->put_figure(m, 1);
-    }
 
     if(ticks == 20){
         fig->put_figure(m, 0);
