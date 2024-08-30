@@ -6,15 +6,12 @@
 #include "figures.cpp"
 #include <LiquidCrystal_I2C.h>
 
-LiquidCrystal_I2C lcd(0x27, 16, 2); // I2C address 0x27, 16 column and 2 rows
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 
 
 
 Matrix m;
-//_J_ j_;
-//Figure *fig = new j_figure();
-//j_figure figr;
 Figure *fig = new i_figure();
 
 void setup() {
@@ -29,25 +26,9 @@ void setup() {
 
     lcd.clear();              // clear display
     lcd.setCursor(0, 0);      // move cursor to   (0, 0)
-    lcd.print("TETRIS BY KHANDER");       // print message at (0, 0)
+    lcd.print("TETRIS BY KHANDER");
 
-    //m.set_by_pos(5, 5, 1);
-    //m.set_by_pos(15, 2, 1);
-    /*
-    for(int i = 0; i < 15 ; i ++){
-        for(int j = 0; j < 10 ; j++){
-            m.set_by_pos(i, j , 1);
-            if( j > 3 && j < 7 || (i > 5 && i < 7))
-                m.set_by_pos(i, j, 0);
-        }
-    }
-    m.set_by_pos(20, 5, 1);
-
-    */
-    //fig->put_figure(m, 1);
-
-    //figs[1] = new _J_();
-    //fig->set_base_pos(5, 1);
+    
     fig->put_figure(m, 1);
 
 }   //setup
@@ -115,7 +96,7 @@ unsigned long lastCheckedTimeDown = 0;
 bool isChangedDown = 0;
 
 void downButton(){
-    currentStateRight = digitalRead(DOWNBTN);
+    currentStateDown = digitalRead(DOWNBTN);
     fig->put_figure(m, 0);
     
     if(lastStateDown == HIGH && currentStateDown == LOW){
@@ -129,12 +110,11 @@ void downButton(){
        
     }
     lastStateDown = currentStateDown;
-/*
+
     if(currentStateDown == LOW && isChangedDown == 0 && ((millis() - lastCheckedTimeDown) > BOUNCE_TIME)){
         fig->down(m);
         lastCheckedTimeDown = millis();
     }
-    */
     fig->put_figure(m, 1);
 }
 
@@ -188,20 +168,14 @@ void loop() {
     rotateButton();
     downButton();
 
-
-    
-
-
     if(ticks == 20){
         fig->put_figure(m, 0);
-//        if(fig->check_if_able_down(m)){
-//            fig->down(m);
         if(!(fig->down(m))){
             fig->put_figure(m, 1);
             delete fig;
             fig = new z_figure;
-            fig->left(m);
-            fig->rotate(m);
+            //fig->left(m);
+            //fig->rotate(m);
             //fig->set_base_pos(4, 1);
         }
         //fig->right(m);
@@ -214,14 +188,15 @@ void loop() {
         /*
         m.set_by_pos(21 - l + 1, r, 0);
         m.set_by_pos( 21 - l, r, 1);
-
+        
         l++;
-        */
+       */
         ticks = 0;
         if(l > 21){
             l = 0;
             r++;
         }
+       
 
     }
     

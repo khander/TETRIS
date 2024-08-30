@@ -14,7 +14,7 @@ Figure::Figure(){
             fig[i][j] = 0;
         }
     }
-    base_pos_x = 5;     // x position of main matrix
+    base_pos_x = 4;     // x position of main matrix
     base_pos_y = 1;    // y position of main matrix
     inner_pos_x = 1;    
     inner_pos_y = 1;
