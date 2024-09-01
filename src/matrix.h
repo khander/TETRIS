@@ -13,6 +13,7 @@ private:
     int integer;        //for ground output (rows)  usually 0b111111...111
     int *row;           // for plus output (columns) 
     int array_to_delete[4];
+    int rows_to_clear;
 public:
   Matrix(void);                                 //constructor
   void print();                                 // print current matrix

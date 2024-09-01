@@ -42,6 +42,7 @@ Matrix::Matrix(){
 
     for(int i = 0; i < 4; i++)      //array to delete init
         array_to_delete[i] = 0;
+    rows_to_clear = 0;
 
 }; // matrix::matrix
 
@@ -93,6 +94,7 @@ void Matrix::check_rows_to_delete(){
         if(counter_of_row == 10){       //not neccessary
             array_to_delete[counter_array++] = i;
         }
+        rows_to_clear = counter_array;
     }
 }   //matrix::check_rows_to_delete
 
@@ -119,4 +121,7 @@ void Matrix::delete_chosen_rows(){
     }
     for(int i = 0; i < 4; i++)      //array to delete init
         array_to_delete[i] = 0;
+
+        //add score
+    rows_to_clear = 0;
 }   //matrix::delete_chosen_rows

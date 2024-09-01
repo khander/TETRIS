@@ -9,17 +9,20 @@
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 
-
+Figure *random_figure();
 
 Matrix m;
-Figure *fig = new i_figure();
+Figure *fig = random_figure();
 
+   
 void setup() {
     pinMode( LEFTBTN, INPUT_PULLUP);
     pinMode( RIGHTBTN, INPUT_PULLUP);
     pinMode( ROTATEBTN, INPUT_PULLUP);
     pinMode( DOWNBTN, INPUT_PULLUP);
     pinMode( PAUSEBTN, INPUT_PULLUP);
+
+    
 
     lcd.init(); // initialize the lcd
     lcd.backlight();
@@ -32,6 +35,35 @@ void setup() {
     fig->put_figure(m, 1);
 
 }   //setup
+
+Figure *random_figure(){
+    int seed = esp_random() % 7;
+    Figure *figure;
+    switch(seed){
+        case 1:
+            figure = new j_figure();
+            break;
+        case 2:
+            figure = new l_figure();
+            break;
+        case 3:
+            figure = new t_figure();
+            break;    
+        case 4:
+            figure = new s_figure();
+            break;
+        case 5:
+            figure = new z_figure();
+            break;
+        case 6:
+            figure = new o_figure();
+            break;
+        case 0:
+            figure = new i_figure();
+            break;    
+    }
+    return figure;
+}
 
 
 int lastStateRight = HIGH;
@@ -111,7 +143,7 @@ void downButton(){
     }
     lastStateDown = currentStateDown;
 
-    if(currentStateDown == LOW && isChangedDown == 0 && ((millis() - lastCheckedTimeDown) > BOUNCE_TIME)){
+    if(currentStateDown == LOW && isChangedDown == 0 && ((millis() - lastCheckedTimeDown) > BOUNCE_TIME_DOWN)){
         fig->down(m);
         lastCheckedTimeDown = millis();
     }
@@ -175,7 +207,7 @@ void loop() {
             m.check_rows_to_delete();
             m.delete_chosen_rows();
             delete fig;
-            fig = new i_figure;
+            fig = random_figure();
         }
         fig->put_figure(m, 1); 
         ticks = 0;      

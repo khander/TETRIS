@@ -4,7 +4,8 @@
 
 
 #define TIME 0
-#define BOUNCE_TIME  200
+#define BOUNCE_TIME  140
+#define BOUNCE_TIME_DOWN 100
 
 #define DATAPIN1 2
 #define LATCHPIN1 0
