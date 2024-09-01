@@ -12,7 +12,7 @@ private:
     int matrix[25][10];     // matrix
     int integer;        //for ground output (rows)  usually 0b111111...111
     int *row;           // for plus output (columns) 
-
+    int array_to_delete[4];
 public:
   Matrix(void);                                 //constructor
   void print();                                 // print current matrix
@@ -21,6 +21,8 @@ public:
   int set_by_pos(int, int, int);                // set position 
   int get_integer() { return integer; };        //  get ground output
   int get_state_by_pos(int, int);
+  void check_rows_to_delete();
+  void delete_chosen_rows();
 }; // class matrix
 
 #endif

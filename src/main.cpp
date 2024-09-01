@@ -172,33 +172,13 @@ void loop() {
         fig->put_figure(m, 0);
         if(!(fig->down(m))){
             fig->put_figure(m, 1);
+            m.check_rows_to_delete();
+            m.delete_chosen_rows();
             delete fig;
-            fig = new z_figure;
-            //fig->left(m);
-            //fig->rotate(m);
-            //fig->set_base_pos(4, 1);
+            fig = new i_figure;
         }
-        //fig->right(m);
-        
-
-
-        fig->put_figure(m, 1);
-        
-
-        /*
-        m.set_by_pos(21 - l + 1, r, 0);
-        m.set_by_pos( 21 - l, r, 1);
-        
-        l++;
-       */
-        ticks = 0;
-        if(l > 21){
-            l = 0;
-            r++;
-        }
-       
-
+        fig->put_figure(m, 1); 
+        ticks = 0;      
     }
     
-
 }   //loop
