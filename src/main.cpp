@@ -1,10 +1,7 @@
-#include <Arduino.h>
-#include <stdio.h>
+
+
 #include "includes.h"
-#include "matrix.h"
-#include "figure.h"
-#include "figures.cpp"
-#include <LiquidCrystal_I2C.h>
+//#include "lcd.cpp"
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
@@ -14,7 +11,32 @@ Figure *random_figure();
 Matrix m;
 Figure *fig = random_figure();
 
+void hello_page(){
+    lcd.clear();              // clear display
+    lcd.setCursor(0, 0);      // move cursor to   (0, 0)
+    lcd.print("TETRIS BY");
+    lcd.setCursor(0, 1);
+    lcd.print("KHANDER");
+    usleep(1000000);
+    lcd.clear();
+    lcd.setCursor(2,0);
+    lcd.print("PRESS START");
+    lcd.setCursor(5,1);
+    lcd.print("BUTTON");
+}
    
+int lastStatePause = HIGH;
+int currentStatePause;
+
+void start_btn(){
+    while(true){
+        currentStatePause = digitalRead(PAUSEBTN);
+        if(lastStatePause == LOW && currentStatePause == HIGH) 
+            return;
+        lastStatePause = currentStatePause;
+    }
+}
+
 void setup() {
     pinMode( LEFTBTN, INPUT_PULLUP);
     pinMode( RIGHTBTN, INPUT_PULLUP);
@@ -23,13 +45,13 @@ void setup() {
     pinMode( PAUSEBTN, INPUT_PULLUP);
 
     
-
-    lcd.init(); // initialize the lcd
+    lcd.init();
     lcd.backlight();
+    hello_page();
+    start_btn();
+   
 
-    lcd.clear();              // clear display
-    lcd.setCursor(0, 0);      // move cursor to   (0, 0)
-    lcd.print("TETRIS BY KHANDER");
+
 
     
     fig->put_figure(m, 1);
@@ -183,8 +205,7 @@ static int ticks = 0;
 int l = 0;
 int r = 0;
 
-int lastStatePause = HIGH;
-int currentStatePause;
+
 
 
 

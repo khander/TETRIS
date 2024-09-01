@@ -2,6 +2,14 @@
 #define INCLUDES_H
 #include <Arduino.h>
 
+#include <stdio.h>
+#include "matrix.h"
+#include "figure.h"
+#include "figures.cpp"
+#include <LiquidCrystal_I2C.h>
+
+
+
 
 #define TIME 0
 #define BOUNCE_TIME  140
