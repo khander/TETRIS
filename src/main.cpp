@@ -25,16 +25,51 @@ void hello_page(){
     lcd.print("BUTTON");
 }
    
+void pause_page(){
+    lcd.clear();
+    lcd.setCursor(5, 0);
+    lcd.print("PAUSE");
+}
+
+
 int lastStatePause = HIGH;
 int currentStatePause;
+unsigned long lastCheckedTimePause = 0;
 
 void start_btn(){
     while(true){
         currentStatePause = digitalRead(PAUSEBTN);
-        if(lastStatePause == LOW && currentStatePause == HIGH) 
+        if(lastStatePause == LOW && currentStatePause == HIGH) {
+            lastStatePause = currentStatePause;
             return;
+        }
+            
         lastStatePause = currentStatePause;
     }
+}
+
+void pause_btn(Matrix& m){
+    currentStatePause = digitalRead(PAUSEBTN);
+
+    if(lastStatePause == LOW && currentStatePause == HIGH ){
+       
+        lastStatePause = currentStatePause;
+        pause_page();
+        while(true){
+            m.print();
+            
+            currentStatePause = digitalRead(PAUSEBTN);
+            if(lastStatePause == LOW && currentStatePause == HIGH) {
+                lastCheckedTimePause = millis();
+                lastStatePause = currentStatePause;
+                return;
+            }
+            lastStatePause = currentStatePause;
+
+        }
+    }
+    lastStatePause = currentStatePause;
+    
 }
 
 void setup() {
@@ -211,7 +246,7 @@ int r = 0;
 
 void loop() {
     
-    currentStatePause = digitalRead(PAUSEBTN);
+    
     
     m.print();
     ticks++;
@@ -220,8 +255,10 @@ void loop() {
     leftButton();
     rotateButton();
     downButton();
+    pause_btn(m);
 
     if(ticks == 20){
+
         fig->put_figure(m, 0);
         if(!(fig->down(m))){
             fig->put_figure(m, 1);
