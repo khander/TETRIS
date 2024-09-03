@@ -6,9 +6,13 @@
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 unsigned long high_score;       //fix
+//byte high_score[8];
+//unsigned long high;
 unsigned long score;
 unsigned int level;
 unsigned int levels_cleared;
+
+int current_tick_rate;
 
 
 Figure *random_figure();
@@ -50,6 +54,16 @@ void game_over_page(){
     lcd.print("H_SCORE:");
     lcd.print(high_score);
 
+}
+
+void score_page(){
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("SCORE:");
+    lcd.print(score);
+    lcd.setCursor(0, 1);
+    lcd.print("LVL:");
+    lcd.print(level);
 }
 
 int lastStatePause = HIGH;
@@ -100,7 +114,8 @@ void setup() {
     pinMode( PAUSEBTN, INPUT_PULLUP);
 
     EEPROM.begin(EEPROM_SIZE);
-    high_score = EEPROM.read(0);
+   // EEPROM.writeULong(0, 0);
+    high_score = EEPROM.readULong(0);
     level = 0;
     score = 0;
     levels_cleared = 0;
@@ -109,7 +124,7 @@ void setup() {
     lcd.backlight();
     hello_page();
     start_btn();
-   
+    score_page();
 
 
 
@@ -267,12 +282,13 @@ int l = 0;
 int r = 0;
 
 void game_over(){
-    game_over_page();
     if(score > high_score){
         high_score = score;
-        EEPROM.write(0, high_score);
+        EEPROM.writeULong(0, high_score);
         EEPROM.commit();
     }
+    game_over_page();
+
     score = 0;
     level = 0;
     levels_cleared = 0;
@@ -301,6 +317,12 @@ void points_to_add(int rows_points){
             break;
     }
     temp_score *=(level + 1);
+    score += temp_score;
+    levels_cleared+=rows_points;
+    if(levels_cleared >=10){
+        level++;
+        levels_cleared -=10;
+    }
 }
 
 void loop() {
@@ -316,14 +338,16 @@ void loop() {
     downButton();
     pause_btn(m);
 
-    if(ticks == 20){
+    if(ticks == TICKRATE_LEVEL_KILLZONE){
 
         fig->put_figure(m, 0);
         if(!(fig->down(m))){
             fig->put_figure(m, 1);
             int rows_points = m.check_rows_to_delete();
-            m.delete_chosen_rows();
+            if(rows_points > 0)
+                m.delete_chosen_rows();
             points_to_add(rows_points);
+            score_page();
             if(fig->is_game_over())
                 game_over();
             delete fig;

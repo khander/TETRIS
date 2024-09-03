@@ -11,7 +11,10 @@
 
 #define EEPROM_SIZE 8
 
-
+#define TICKRATE_LEVEL_1 35
+#define TICKRATE_LEVEL_2 25
+#define TICKRATE_LEVEL_3 17
+#define TICKRATE_LEVEL_KILLZONE 5
 
 
 #define TIME 0

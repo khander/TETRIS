@@ -91,7 +91,7 @@ int Matrix::set_by_pos(int y, int x, int num){
 
 int Matrix::check_rows_to_delete(){
     int counter_array = 0;
-    for(int i = 0; i < 25; i++){
+    for(int i = 3; i < 25; i++){
         int counter_of_row = 0;
         for(int j = 0; j < 10; j++){
             if(matrix[i][j] == 1)
