@@ -7,6 +7,9 @@
 #include "figure.h"
 #include "figures.cpp"
 #include <LiquidCrystal_I2C.h>
+#include <EEPROM.h>
+
+#define EEPROM_SIZE 8
 
 
 

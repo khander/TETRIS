@@ -46,6 +46,14 @@ Matrix::Matrix(){
 
 }; // matrix::matrix
 
+void Matrix::reset_matrix(){
+    for (int i = 0; i < 25; i++){
+    for (int j = 0; j < 10; j++){
+      matrix[i][j] = 0;
+    }
+  }
+}   //matrex::reset_matrix
+
 int Matrix::get_state_by_pos(int x, int y){
     y += 4;
     return matrix[y][x];
@@ -81,7 +89,7 @@ int Matrix::set_by_pos(int y, int x, int num){
     return 1;
 }   //matrix::set_by_pos
 
-void Matrix::check_rows_to_delete(){
+int Matrix::check_rows_to_delete(){
     int counter_array = 0;
     for(int i = 0; i < 25; i++){
         int counter_of_row = 0;
@@ -95,7 +103,9 @@ void Matrix::check_rows_to_delete(){
             array_to_delete[counter_array++] = i;
         }
         rows_to_clear = counter_array;
+
     }
+    return rows_to_clear;
 }   //matrix::check_rows_to_delete
 
 void Matrix::delete_chosen_rows(){

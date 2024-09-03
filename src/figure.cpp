@@ -20,6 +20,13 @@ Figure::Figure(){
     inner_pos_y = 1;
 };  //Figure::Figure
 
+int Figure::is_game_over(){
+    if(base_pos_y < 2)
+        return 1;
+    else
+        return 0;
+}
+
 int Figure::rotate(Matrix &m){
 
     for (int i = 0; i < 4; i++){

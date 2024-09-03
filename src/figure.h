@@ -25,6 +25,7 @@ public:
     int check_if_able_down(Matrix &);
     int check_if_able_left(Matrix &);
     int check_if_able_right(Matrix &);
+    int is_game_over();
     virtual ~Figure(){};
 };
 

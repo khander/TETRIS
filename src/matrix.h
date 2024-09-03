@@ -22,8 +22,9 @@ public:
   int set_by_pos(int, int, int);                // set position 
   int get_integer() { return integer; };        //  get ground output
   int get_state_by_pos(int, int);
-  void check_rows_to_delete();
+  int check_rows_to_delete();
   void delete_chosen_rows();
+  void reset_matrix();
 }; // class matrix
 
 #endif

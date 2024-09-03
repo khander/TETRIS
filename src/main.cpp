@@ -1,9 +1,14 @@
 
 
 #include "includes.h"
-//#include "lcd.cpp"
+
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+unsigned long high_score;       //fix
+unsigned long score;
+unsigned int level;
+unsigned int levels_cleared;
 
 
 Figure *random_figure();
@@ -31,6 +36,21 @@ void pause_page(){
     lcd.print("PAUSE");
 }
 
+void game_over_page(){
+    lcd.clear();
+    lcd.setCursor(3, 0);
+    lcd.print("GAME OVER");
+    lcd.setCursor(0, 1);
+    lcd.print("SCORE:");
+    lcd.print(score);
+    usleep(3000000);
+    lcd.setCursor(0, 0);
+    lcd.print("             ");
+    lcd.setCursor(0, 0);
+    lcd.print("H_SCORE:");
+    lcd.print(high_score);
+
+}
 
 int lastStatePause = HIGH;
 int currentStatePause;
@@ -79,6 +99,11 @@ void setup() {
     pinMode( DOWNBTN, INPUT_PULLUP);
     pinMode( PAUSEBTN, INPUT_PULLUP);
 
+    EEPROM.begin(EEPROM_SIZE);
+    high_score = EEPROM.read(0);
+    level = 0;
+    score = 0;
+    levels_cleared = 0;
     
     lcd.init();
     lcd.backlight();
@@ -190,7 +215,7 @@ void downButton(){
     
     if(lastStateDown == HIGH && currentStateDown == LOW){
         fig->down(m);
-        
+        score++;            //1 point for each skipped row
         lastCheckedTimeDown = millis();
         isChangedDown = 0;
     }
@@ -202,6 +227,7 @@ void downButton(){
 
     if(currentStateDown == LOW && isChangedDown == 0 && ((millis() - lastCheckedTimeDown) > BOUNCE_TIME_DOWN)){
         fig->down(m);
+        score++;         //1 point for each skipped row
         lastCheckedTimeDown = millis();
     }
     fig->put_figure(m, 1);
@@ -240,9 +266,42 @@ static int ticks = 0;
 int l = 0;
 int r = 0;
 
+void game_over(){
+    game_over_page();
+    if(score > high_score){
+        high_score = score;
+        EEPROM.write(0, high_score);
+        EEPROM.commit();
+    }
+    score = 0;
+    level = 0;
+    levels_cleared = 0;
+    start_btn();
+    m.reset_matrix();
 
+    
+}
 
-
+void points_to_add(int rows_points){
+    int temp_score = 0;
+    switch(rows_points){
+        case 1: 
+            temp_score = 40;
+            break;
+        case 2:
+            temp_score = 100;
+            break;
+        case 3:
+            temp_score = 300;
+            break;
+        case 4:
+            temp_score = 1200;
+            break;
+        default:
+            break;
+    }
+    temp_score *=(level + 1);
+}
 
 void loop() {
     
@@ -262,9 +321,13 @@ void loop() {
         fig->put_figure(m, 0);
         if(!(fig->down(m))){
             fig->put_figure(m, 1);
-            m.check_rows_to_delete();
+            int rows_points = m.check_rows_to_delete();
             m.delete_chosen_rows();
+            points_to_add(rows_points);
+            if(fig->is_game_over())
+                game_over();
             delete fig;
+            
             fig = random_figure();
         }
         fig->put_figure(m, 1); 
