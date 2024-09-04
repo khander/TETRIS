@@ -119,6 +119,7 @@ void setup() {
     level = 0;
     score = 0;
     levels_cleared = 0;
+    current_tick_rate = TICKRATE_LEVEL_BASE;
     
     lcd.init();
     lcd.backlight();
@@ -338,15 +339,31 @@ void loop() {
     downButton();
     pause_btn(m);
 
-    if(ticks == TICKRATE_LEVEL_KILLZONE){
+    if(ticks == current_tick_rate){
 
         fig->put_figure(m, 0);
         if(!(fig->down(m))){
             fig->put_figure(m, 1);
             int rows_points = m.check_rows_to_delete();
-            if(rows_points > 0)
+            if(rows_points > 0){
                 m.delete_chosen_rows();
-            points_to_add(rows_points);
+                points_to_add(rows_points);
+                if(level >= 13 && level < 16){
+                    current_tick_rate = TICKRATE_LEVEL_1;
+                }
+                else if(level >= 16 && level < 19){
+                    current_tick_rate = TICKRATE_LEVEL_2;
+                }
+                else if(level >= 19 && level < 29){
+                    current_tick_rate = TICKRATE_LEVEL_3;
+                }
+                else if(level >= 29){
+                    current_tick_rate = TICKRATE_LEVEL_KILLZONE;
+                }
+                else{
+                    current_tick_rate = TICKRATE_LEVEL_BASE - level * 2;
+                }
+            }
             score_page();
             if(fig->is_game_over())
                 game_over();
