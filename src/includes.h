@@ -34,10 +34,8 @@
 #define DOWNBTN 5
 #define PAUSEBTN 3
 #define SPEAKER 17
-//#define TOPBTN 
-#define DATAPIN2 1
-//#define LATCHPIN2 
-//#define CLOCKPIN2 18
+
+//#define DATAPIN2 1
 
 #define NOTE_B0  31
 #define NOTE_C1  33

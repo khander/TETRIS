@@ -97,6 +97,7 @@ void pause_btn(Matrix& m){
             if(lastStatePause == LOW && currentStatePause == HIGH) {
                 lastCheckedTimePause = millis();
                 lastStatePause = currentStatePause;
+                score_page();
                 return;
             }
             lastStatePause = currentStatePause;
