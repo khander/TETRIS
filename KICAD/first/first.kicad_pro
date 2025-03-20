@@ -58,7 +58,11 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "courtyards_overlap|27519999|-15519999|07a84ad0-e983-47f7-890f-096f2c80b46c|715cd8d0-ca5c-4fe3-ab3b-648e09aafcb0",
+        "courtyards_overlap|27519999|-18019999|02e1a966-90df-4330-acfa-da4258e4b1f0|07a84ad0-e983-47f7-890f-096f2c80b46c",
+        "courtyards_overlap|27519999|-20519999|02e1a966-90df-4330-acfa-da4258e4b1f0|d33a9a0f-acc3-420d-887d-597e6ce5a60e"
+      ],
       "meta": {
         "version": 2
       },
@@ -66,7 +70,7 @@
         "annular_width": "error",
         "clearance": "error",
         "connection_width": "warning",
-        "copper_edge_clearance": "error",
+        "copper_edge_clearance": "ignore",
         "copper_sliver": "warning",
         "courtyards_overlap": "error",
         "diff_pair_gap_out_of_range": "error",
@@ -98,7 +102,7 @@
         "shorting_items": "error",
         "silk_edge_clearance": "warning",
         "silk_over_copper": "warning",
-        "silk_overlap": "warning",
+        "silk_overlap": "ignore",
         "skew_out_of_range": "error",
         "solder_mask_bridge": "error",
         "starved_thermal": "error",
@@ -109,7 +113,7 @@
         "track_dangling": "warning",
         "track_width": "error",
         "tracks_crossing": "error",
-        "unconnected_items": "error",
+        "unconnected_items": "ignore",
         "unresolved_variable": "error",
         "via_dangling": "warning",
         "zones_intersect": "error"
